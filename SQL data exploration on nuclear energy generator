@@ -1,0 +1,14 @@
+SELECT TOP (1000) [Entity]
+      ,[Year]
+      ,[Electricity from nuclear - TWh]
+      ,[Code]
+  FROM [portfolio_on_nuclear_energy_generator].[dbo].['nuclear-energy-generation$']
+
+	select	Entity, 
+			Year, 
+			[Electricity from nuclear - TWh],
+			[Electricity from nuclear - TWh] * 1000 as [Electricity from nuclear - MWh],
+			Code
+	from portfolio_on_nuclear_energy_generator.dbo.['nuclear-energy-generation$']
+	where Entity like '%Asia%'
+	order by 3 DESC

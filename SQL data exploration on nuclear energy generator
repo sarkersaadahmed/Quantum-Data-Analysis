@@ -6,16 +6,17 @@ SELECT TOP (1000) [Entity]
 
 SELECT 
     Entity,  
-    [Electricity from nuclear - TWh],
-    [Electricity from nuclear - TWh] * 1000 as [Electricity from nuclear - MWh],
+    SUM(CAST([Electricity from nuclear - TWh] AS float)) AS [Sum Electricity generated],
     Year,
-    MAX([Electricity from nuclear - TWh]) as highest_electricity_generated,
     Code
 FROM 
-    portfolio_on_nuclear_energy_generator.dbo.['nuclear-energy-generation$']
+    portfolio_on_nuclear_energy_generator.dbo.['nuclear-energy-generation$'] AS nuclear
 WHERE 
-    Entity LIKE '%Asia%'
+    Code IS NOT NULL
+    AND Entity != 'World'
 GROUP BY
-	Entity, [Electricity from nuclear - TWh], Year, Code
+    Entity, Year, Code  
 ORDER BY 
-    Year DESC;
+    [Sum Electricity generated] DESC; 
+
+

@@ -4,11 +4,18 @@ SELECT TOP (1000) [Entity]
       ,[Code]
   FROM [portfolio_on_nuclear_energy_generator].[dbo].['nuclear-energy-generation$']
 
-	select	Entity, 
-			Year, 
-			[Electricity from nuclear - TWh],
-			[Electricity from nuclear - TWh] * 1000 as [Electricity from nuclear - MWh],
-			Code
-	from portfolio_on_nuclear_energy_generator.dbo.['nuclear-energy-generation$']
-	where Entity like '%Asia%'
-	order by 3 DESC
+SELECT 
+    Entity,  
+    [Electricity from nuclear - TWh],
+    [Electricity from nuclear - TWh] * 1000 as [Electricity from nuclear - MWh],
+    Year,
+    MAX([Electricity from nuclear - TWh]) as highest_electricity_generated,
+    Code
+FROM 
+    portfolio_on_nuclear_energy_generator.dbo.['nuclear-energy-generation$']
+WHERE 
+    Entity LIKE '%Asia%'
+GROUP BY
+	Entity, [Electricity from nuclear - TWh], Year, Code
+ORDER BY 
+    Year DESC;

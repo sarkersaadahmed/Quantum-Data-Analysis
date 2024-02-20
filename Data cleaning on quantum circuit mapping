@@ -1,1 +1,112 @@
-t
+SELECT TOP (1000) [name]
+      ,[ binding energy]
+      ,[ ionization energy]
+      ,[ dipole magnitude]
+      ,[ dipole x]
+      ,[ dipole y]
+      ,[ dipole z]
+  FROM [Data cleaning on quantum circuit mapping].[dbo].[reference$]
+
+--printing out everything just to confirm everything is in the dataset
+select * 
+from [Data cleaning on quantum circuit mapping].[dbo].[reference$]
+
+-- change the data type and add a new column with the new updated values
+select name, convert(nvarchar(max),name)
+from [Data cleaning on quantum circuit mapping].[dbo].[reference$]
+
+alter table reference$
+alter column name nvarchar(max);
+
+alter table reference$
+add new_atom_name_and_number nvarchar(255);
+
+update reference$
+set atom = CONVERT(nvarchar(255), name);
+
+
+-- populate an empty rows with signified datas
+select a.[ binding energy], a.[ dipole x], b.[ binding energy], b.[ dipole x], ISNULL(a.[ dipole x], b.[ dipole x])
+from [Data cleaning on quantum circuit mapping].[dbo].[reference$] as a
+inner join [Data cleaning on quantum circuit mapping].[dbo].[reference$] as b
+ on a.[ dipole x] = b.[ dipole x]
+ and a.[ binding energy] <> b.[ binding energy]
+
+where a.[ binding energy] is null
+
+--update the empty rows 
+update a
+set [ binding energy] = ISNULL(a.[ dipole x], b.[ dipole x]
+from [Data cleaning on quantum circuit mapping].[dbo].[reference$] as a
+inner join [Data cleaning on quantum circuit mapping].[dbo].[reference$] as b
+ on a.[ dipole x] = b.[ dipole x]
+ and a.[ binding energy] <> b.[ binding energy]
+
+where a.[ binding energy] is not null
+
+--open to adding a new column
+ALTER TABLE [Data cleaning on quantum circuit mapping].[dbo].[reference$]
+ADD label VARCHAR(30)
+
+-- Populate [add the signified datas into the column] the "label" column with the first 8 characters of the "name" column
+UPDATE [Data cleaning on quantum circuit mapping].[dbo].[reference$]
+SET label = LEFT(name, 8)
+
+-- opening to adding a new column
+ALTER TABLE [Data cleaning on quantum circuit mapping].[dbo].[reference$]
+ADD atomic_number VARCHAR(30)
+
+-- Populate the "atomic_number" column with the characters after the first 8 characters of the "name" column
+UPDATE [Data cleaning on quantum circuit mapping].[dbo].[reference$]
+SET atomic_number = RIGHT(name, LEN(name) - 8)
+
+select *
+from [Data cleaning on quantum circuit mapping].[dbo].reference$
+
+--set and replace
+select 
+replace(name, '_', '->') as new_atom
+from [Data cleaning on quantum circuit mapping].[dbo].[reference$]
+
+alter table reference$
+add new_atom varchar(30)
+
+update reference$
+set new_atom = replace(name, '_', '->')
+from [Data cleaning on quantum circuit mapping].[dbo].[reference$]
+
+--set and replace full stop
+select 
+Parsename(replace(name, '_', '->'), 1)
+from [Data cleaning on quantum circuit mapping].[dbo].[reference$]
+
+
+--divide
+select *
+from [Data cleaning on quantum circuit mapping].[dbo].[reference$]
+
+--remove duplicate
+with row_num_cte as (
+select *
+ ROW_NUMBER() over (
+ partition by name,
+			  binding energy 
+			  ionization energy
+			  dipole magnitude
+			  dipole x
+			  dipole y
+			  dipole z
+			  order by (
+				binding energy 
+				dipole magnitude
+
+from [Data cleaning on quantum circuit mapping].[dbo].[reference$]
+)
+)
+)
+
+--delete column
+
+--alter table reference$
+--drop column ionization energy
+

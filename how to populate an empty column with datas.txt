@@ -1,0 +1,8 @@
+select a.[ dipole x], a.[ binding energy], b.[ dipole x], b.[ binding energy], isnull(a. [dipole x], b. [dipole x])
+from [Data cleaning on quantum circuit mapping].[dbo].[reference$] as a
+inner join [Data cleaning on quantum circuit mapping].[dbo].[reference$] as b
+ on a.[ dipole x] = b.[ dipole x]
+ and a.[ binding energy] <> b.[ binding energy]
+
+where a.[ binding energy] is not null
+

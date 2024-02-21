@@ -1,0 +1,24 @@
+select distinct([column name])
+from [database name].[dbo].[query name]
+group by [which could be yur database focus column]
+order by [which column you want to specifically order]
+
+
+select [distinct column name]
+case when [distinct column name] = 'y' then 'some other new string'
+     when [distinct column name] = 'n' then 'some other new string'
+     else [distinct column name]
+     end 
+
+from [database name].[dbo].[query name]
+
+alter table [query name]
+add [new column name] [data type]
+
+update [query name]
+set [new column name] = 
+select [distinct column name]
+case when [distinct column name] = 'y' then 'some other new string'
+     when [distinct column name] = 'n' then 'some other new string'
+     else [distinct column name]
+     end 

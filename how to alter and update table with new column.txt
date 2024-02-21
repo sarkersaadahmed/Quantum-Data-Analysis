@@ -1,0 +1,12 @@
+how to alter tables
+-> select [new column name], convert([data type required to convert], column name)
+from [database name].[dbo].[query name]
+
+update [query name]
+set [chosen column name] = convert(your choice data type, chosen column name)
+
+alter table [query name]
+add [new column name] [your choice data type]
+
+update [query name]
+set [new chosen column name] = convert(your choice data type, previous chosen column name)

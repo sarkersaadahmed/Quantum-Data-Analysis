@@ -1,0 +1,10 @@
+=max
+=min
+=if
+=ifs [multiple inputs]
+=right [you cant do it for a date type in excel]
+=left [you cant do it for a date type in excel]
+=text(selected columns, type format)
+=trim [removes white space]
+
+

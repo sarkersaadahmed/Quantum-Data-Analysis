@@ -1,0 +1,17 @@
+xlookup mode 
+
+
+"*"& column choice -> anything that has column choice name or anything after whatever symbols or characters exist
+column choice "*"&  -> anything that has column choice name or anything before whatever symbols or characters exist
+
+
+xlookup(choice column, range of column, range of other choice column,, 1 [either 
+next to smaller value or next to larger vvalue [as in the name of the person after or before the choice column]]
+it will search that specific column if the date after the choice date exists
+
+just like how lists are being searched in pythn one by one
+
+same thing for xlookup(choice column, range of column, range of other choice column,,, 1 but the difference is
+that here it either iterates through every column by binary search or by normal search [ascending from top to 
+bottom] or descending [from bottom to top]]
+
